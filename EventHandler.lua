@@ -106,7 +106,9 @@ function EventHandler.OnEvent:Connect(Event: string, callback: (Player, {}) -> (
 						print("[Client] [ConnectedClients] - ", Event, " | ", EventHandler.ConnectedClients[event])
 						print("[Client] Event is being received: ", event)
 					end
-					callback(...)
+					if event == Event then
+						callback(...)
+					end
 				end)
 			elseif RunService:IsServer() then
 				RemoteEvents[remoteEvent].OnServerEvent:Connect(function(player, event, ...)
@@ -118,7 +120,9 @@ function EventHandler.OnEvent:Connect(Event: string, callback: (Player, {}) -> (
 						print("[Server] [ConnectedClients] - ", Event, " | ", EventHandler.ConnectedClients[event])
 						print("[Server] Event is being received: ", event)
 					end
-					callback(player, ...)
+					if event == Event then
+						callback(player, ...)
+					end
 				end)
 			end
 		end
@@ -151,5 +155,7 @@ function EventHandler:FireEventToClient(Event: string, player, ...)
 		end
 	end
 end
+
+-- TODO: Add support for cross script events, locally for client or server.
 
 return EventHandler
