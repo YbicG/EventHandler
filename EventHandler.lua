@@ -18,7 +18,7 @@ local EventUsage = {
 
 local LoadedEvents = {}
 
-local DEBUG = false
+local DEBUG = true
 
 EventHandler.Events = {
 	TestEvent = "TestEvent"
@@ -94,14 +94,15 @@ end
 
 function EventHandler.OnEvent:Connect(Event: string, callback: (Player, {}) -> ())
 	pcall(function()
+		if EventHandler.ConnectedClients[Event] == nil then
+			EventHandler.ConnectedClients[Event] = {}
+		end
+		table.insert(EventHandler.ConnectedClients[Event], callback)
+		
 		for remoteEvent, _ in pairs(RemoteEvents) do
 			local RunService = game:GetService("RunService")
 			if RunService:IsClient() then
 				RemoteEvents[remoteEvent].OnClientEvent:Connect(function(event, ...)
-					if EventHandler.ConnectedClients[event] == nil then
-						EventHandler.ConnectedClients[event] = {}
-					end
-					table.insert(EventHandler.ConnectedClients[event], callback)
 					if DEBUG then
 						print("[Client] [ConnectedClients] - ", Event, " | ", EventHandler.ConnectedClients[event])
 						print("[Client] Event is being received: ", event)
@@ -112,10 +113,6 @@ function EventHandler.OnEvent:Connect(Event: string, callback: (Player, {}) -> (
 				end)
 			elseif RunService:IsServer() then
 				RemoteEvents[remoteEvent].OnServerEvent:Connect(function(player, event, ...)
-					if EventHandler.ConnectedClients[event] == nil then
-						EventHandler.ConnectedClients[event] = {}
-					end
-					table.insert(EventHandler.ConnectedClients[event], callback)
 					if DEBUG then
 						print("[Server] [ConnectedClients] - ", Event, " | ", EventHandler.ConnectedClients[event])
 						print("[Server] Event is being received: ", event)
