@@ -237,7 +237,7 @@ function EventHandler:FireBind(Event: string, ...)
 	end
 end
 
-function EventHandler.OnLocalEvent:Connect(Event: string, callback: (Player, {}) -> ())
+function EventHandler.OnLocalEvent:Connect(Event: string, callback: ({}) -> ())
 	pcall(function()
 		if EventHandler.BindableConnectedClients[Event] == nil then
 			EventHandler.BindableConnectedClients[Event] = {}
@@ -257,13 +257,13 @@ function EventHandler.OnLocalEvent:Connect(Event: string, callback: (Player, {})
 					end
 				end)
 			elseif RunService:IsServer() then
-				BindableEvents[bindEvent].Event:Connect(function(player, event, ...)
+				BindableEvents[bindEvent].Event:Connect(function(event, ...)
 					if DEBUG then
 						print("[Server] [BindConnectedClients] - ", Event, " | ", EventHandler.BindableConnectedClients[event])
 						print("[Server] BindEvent is being received: ", event)
 					end
 					if event == Event then
-						callback(player, ...)
+						callback(...)
 					end
 				end)
 			end
