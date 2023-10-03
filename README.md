@@ -59,6 +59,11 @@ EventHandler.OnEvent:Connect(EventHandler.Events.TestEvent, function(data)
     print("Received TestEvent with data: " .. data)
 end)
 
+-- Connect a callback to an bindable event on client or server
+EventHandler.OnLocalEvent:Connect(EventHandler.Events.TestEvent, function(data)
+    print("Received TestEvent with data: " .. data)
+end)
+
 -- Fire an event from the client
 EventHandler:FireEvent(EventHandler.Events.TestEvent, "Hello, world!")
 
@@ -67,4 +72,7 @@ EventHandler:FireEventToClient(EventHandler.Events.TestEvent, "Hello, alll!")
 
 -- Fire an event to a specific client from the server
 local player = your.Player
-EventHandler:FireEventToClient(EventHandler.Events.TestEvent, player, "Hello to you, client!")```
+EventHandler:FireEventToClient(EventHandler.Events.TestEvent, player, "Hello to you, client!")
+
+-- Fire an bindable event from the client or server
+EventHandler:FireBind(EventHandler.Events.TestEvent, "Hello, world!")```
