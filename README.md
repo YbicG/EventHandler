@@ -33,12 +33,17 @@ The following methods and properties are available for external use:
 ### Methods
 
 -  `EventHandler:FireEvent(Event: string, ...)`
+-  `EventHandler:FireBind(Event: string, ...)`
 
 Fires an event from the client or server, depending on the context. It ensures that events are fired within the usage limits and switches to backup events if necessary.
 
 - `EventHandler.OnEvent:Connect(Event: string, callback: (Player, ...) -> ())`
 
 Connects a callback function to an event. When the specified event is received, the callback is invoked with the event data.
+
+- `EventHandler.OnLocalEvent:Connect(Event: string, callback: (...) -> ())`
+
+Connects a callback function to an bindable event. When the specified event is received, the callback is invoked with the event data.
 
 - `EventHandler:FireEventToClient(Event: string, player, ...)`
 
