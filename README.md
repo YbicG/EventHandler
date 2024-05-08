@@ -73,7 +73,7 @@ end)
 EventHandler:FireEvent(EventHandler.Events.TestEvent, "Hello, world!")
 
 -- Fire an event to all clients from the server
-EventHandler:FireEventToClient(EventHandler.Events.TestEvent, "Hello, alll!")
+EventHandler:FireEvent(EventHandler.Events.TestEvent, "Hello, alll!")
 
 -- Fire an event to a specific client from the server
 local player = your.Player
